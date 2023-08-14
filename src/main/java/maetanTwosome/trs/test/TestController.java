@@ -25,7 +25,6 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-
         System.out.println("TestController.test");
 
         return "ok!";
@@ -33,7 +32,6 @@ public class TestController {
 
     @GetMapping("/select")
     public String select() {
-
         System.out.println("TestController.test");
         TestUser testUser = testRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("몰라"));
         System.out.println(testUser);

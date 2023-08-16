@@ -34,7 +34,7 @@ public class TestController {
     public String select() {
         System.out.println("TestController.test");
         TestUser testUser = testRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("몰라"));
-        System.out.println(testUser + " test ");
+        System.out.println(testUser + " test!! ");
 
         return "ok!";
     }

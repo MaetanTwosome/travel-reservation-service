@@ -1,14 +1,14 @@
 package maetanTwosome.trs.member.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 
 @Getter
-@Setter
+@Builder
 @Entity
 @Table
 @NoArgsConstructor
@@ -30,6 +30,24 @@ public class Member {
     private Date lastLoginDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date JoinDate;
+    private Date joinDate;
 
+    @Builder
+    public Member(Long id, String email, String password, String phoneNumber, String nickname,
+                  String name, String role, char oauthType, Date lastLoginDate, Date joinDate) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.nickname = nickname;
+        this.name = name;
+        this.role = role;
+        this.oauthType = oauthType;
+        this.lastLoginDate = lastLoginDate;
+        this.joinDate = joinDate;
+    }
+
+    public void update() {
+        this.name = "update member"; // test 용도
+    }
 }

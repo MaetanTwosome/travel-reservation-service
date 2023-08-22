@@ -9,14 +9,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 public class MemberRepositoryTest {
 
-    @Autowired private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     void create() {
 
         //given
-        Member member = new Member();
-        member.setName("member");
+        Member member = Member.builder()
+                .name("member")
+                .build();
 
         //when
         Member findMember = memberRepository.save(member);
@@ -29,14 +31,17 @@ public class MemberRepositoryTest {
     void read() {
 
         //given
-        Member member = new Member();
-        member.setName("member");
-        member.setEmail("trashyou@naver.com");
+        Member member = Member.builder()
+                .name("member")
+                .email("trashyou@naver.com")
+                .build();
 
         //when
         memberRepository.save(member);
         Member findMember = memberRepository.findById(member.getId()).orElse(null);
         Assertions.assertThat(findMember).isNotNull();
+
+        //then
         Assertions.assertThat(findMember.getName()).isEqualTo("member");
         Assertions.assertThat(findMember.getEmail()).isEqualTo("trashyou@naver.com");
     }
@@ -45,20 +50,20 @@ public class MemberRepositoryTest {
     void update() {
 
         //given
-        Member member = new Member();
-        member.setName("member");
+        Member member = Member.builder()
+                .name("member")
+                .build();
 
         //when
         memberRepository.save(member);
         Member findMember = memberRepository.findById(member.getId()).orElse(null);
         Assertions.assertThat(findMember).isNotNull();
 
-        findMember.setName("update member");
-        memberRepository.save(findMember);
+        findMember.update();
 
+        //then
         Member updateMember = memberRepository.findById(member.getId()).orElse(null);
         Assertions.assertThat(updateMember).isNotNull();
-        
         Assertions.assertThat(updateMember.getName()).isEqualTo("update member");
     }
 
@@ -66,8 +71,9 @@ public class MemberRepositoryTest {
     void delete() {
 
         //given
-        Member member = new Member();
-        member.setName("member");
+        Member member = Member.builder()
+                .name("member")
+                .build();
 
         //when
         memberRepository.save(member);

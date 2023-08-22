@@ -1,6 +1,7 @@
 package maetanTwosome.trs.member.repository;
 
 import maetanTwosome.trs.member.entity.Member;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class MemberRepositoryTest {
         Member findMember = memberRepository.findById(member.getId()).orElse(null);
         Assertions.assertThat(findMember).isNotNull();
 
-        findMember.update();
+        findMember.update("update member");
 
         //then
         Member updateMember = memberRepository.findById(member.getId()).orElse(null);

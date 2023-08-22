@@ -1,6 +1,7 @@
 package maetanTwosome.trs.member.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Getter
-@Builder
 @Entity
 @Table
 @NoArgsConstructor
@@ -47,7 +47,7 @@ public class Member {
         this.joinDate = joinDate;
     }
 
-    public void update() {
-        this.name = "update member"; // test 용도
+    public void update(String updateName) {
+        this.name = updateName; // test 용도
     }
 }

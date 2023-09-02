@@ -24,7 +24,7 @@ public class MemberRepositoryTest {
     void create() {
 
         //given
-        Member member = getMemberByProvider(NONE);
+        Member member = createMemberByProvider(NONE);
 
         //when
         Member findMember = memberRepository.save(member);
@@ -38,7 +38,7 @@ public class MemberRepositoryTest {
     void read() {
 
         //given
-        Member member = getMemberByProvider(NONE);
+        Member member = createMemberByProvider(NONE);
 
         //when
         memberRepository.save(member);
@@ -52,10 +52,10 @@ public class MemberRepositoryTest {
 
     @DisplayName("이메일 계정의 정보를 수정한다.")
     @Test
-    void updateForEmailAccount() {
+    void updateEmailAccount() {
 
         //given
-        Member member = getMemberByProvider(NONE);
+        Member member = createMemberByProvider(NONE);
 
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto();
         dto.setNickname("길동이다이어트하자");
@@ -77,10 +77,10 @@ public class MemberRepositoryTest {
 
     @DisplayName("OAuth 계정의 정보를 수정한다.")
     @Test
-    void updateForOAuthAccount() {
+    void updateOAuthAccount() {
 
         //given
-        Member member = getMemberByProvider(KAKAO);
+        Member member = createMemberByProvider(KAKAO);
 
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto();
         dto.setNickname("길동이다이어트하자");
@@ -105,7 +105,7 @@ public class MemberRepositoryTest {
     void delete() {
 
         //given
-        Member member = getMemberByProvider(NONE);
+        Member member = createMemberByProvider(NONE);
 
         //when
         memberRepository.save(member);
@@ -116,7 +116,7 @@ public class MemberRepositoryTest {
         assertThat(deleteMember).isNull();
     }
 
-    private static Member getMemberByProvider(Provider provider) {
+    private static Member createMemberByProvider(Provider provider) {
 
         return Member.builder()
                 .name("홍길동")
@@ -126,6 +126,7 @@ public class MemberRepositoryTest {
                 .phoneNumber("01012345678")
                 .role(Role.MEMBER)
                 .provider(provider)
+                .providerId("1234")
                 .build();
     }
 }

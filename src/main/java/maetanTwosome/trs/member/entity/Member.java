@@ -43,10 +43,10 @@ public class Member {
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private Provider provider;
 
-    @Column
+    @Column(nullable = false)
     private String providerId;
 
     @Temporal(TemporalType.TIMESTAMP)

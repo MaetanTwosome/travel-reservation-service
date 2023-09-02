@@ -2,29 +2,52 @@ package maetanTwosome.trs.member.entity;
 
 import jakarta.persistence.*;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import maetanTwosome.trs.member.dto.MemberUpdateRequestDto;
 
 import java.util.Date;
 
+import static maetanTwosome.trs.member.entity.Provider.*;
+
+
 @Getter
-@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table
-@NoArgsConstructor
+@Entity
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false, unique = true)
     private String nickname;
+
+    @Column(nullable = false)
     private String name;
-    private String role;
-    private char oauthType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Provider provider;
+
+    @Column(nullable = false)
+    private String providerId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;
@@ -33,8 +56,7 @@ public class Member {
     private Date joinDate;
 
     @Builder
-    public Member(Long id, String email, String password, String phoneNumber, String nickname,
-                  String name, String role, char oauthType, Date lastLoginDate, Date joinDate) {
+    public Member(Long id, String email, String password, String phoneNumber, String nickname, String name, Role role, Provider provider, String providerId, Date lastLoginDate, Date joinDate) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -42,12 +64,23 @@ public class Member {
         this.nickname = nickname;
         this.name = name;
         this.role = role;
-        this.oauthType = oauthType;
+        this.provider = provider;
+        this.providerId = providerId;
         this.lastLoginDate = lastLoginDate;
         this.joinDate = joinDate;
     }
 
-    public void update(String updateName) {
-        this.name = updateName; // test 용도
+    // TODO: 어떤 값 수정 필요한 지 한번 더 확인
+    public void update(MemberUpdateRequestDto dto) {
+        if (isEmailAccount()) {
+            this.password = dto.getPassword();
+        }
+        this.nickname = dto.getNickname();
+        this.name = dto.getName();
+        this.phoneNumber = dto.getPhoneNumber();
+    }
+
+    private boolean isEmailAccount() {
+        return NONE.equals(this.provider);
     }
 }

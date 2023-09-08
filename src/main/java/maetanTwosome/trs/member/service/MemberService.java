@@ -32,8 +32,6 @@ public class MemberService {
     @Transactional(readOnly = true)
     private void validateDuplicateEmail(MemberSaveRequest memberSaveRequest) {
         memberRepository.findByEmail(memberSaveRequest.getEmail())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 이메일입니다.");
-                });
+                .orElseThrow(() -> new IllegalStateException("이미 존재하는 이메일입니다."));
     }
 }

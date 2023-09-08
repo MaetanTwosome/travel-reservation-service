@@ -32,7 +32,7 @@ public class Member {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nickname;
 
     @Column(nullable = false)
@@ -46,7 +46,6 @@ public class Member {
     @Column(nullable = false)
     private Provider provider;
 
-    @Column(nullable = false)
     private String providerId;
 
     @Temporal(TemporalType.TIMESTAMP)

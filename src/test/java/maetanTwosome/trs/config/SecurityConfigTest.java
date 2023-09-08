@@ -9,8 +9,6 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * WHITE LIST : ["/", "/static/**", "/js/**", "/image/**", "/auth/**"]
  */

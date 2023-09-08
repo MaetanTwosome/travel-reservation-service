@@ -19,14 +19,13 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public MemberSaveResponse saveMember(MemberSaveRequest memberSaveRequest) {
+    public Long saveMember(MemberSaveRequest memberSaveRequest) {
         validateDuplicateEmail(memberSaveRequest.getEmail());
 
         String encodedPassword = passwordEncoder.encode(memberSaveRequest.getPassword());
         memberSaveRequest.setPassword(encodedPassword);
 
-        Member member = memberRepository.save(memberSaveRequest.toEntity());
-        return MemberSaveResponse.from(member);
+        return memberRepository.save(memberSaveRequest.toEntity()).getId();
     }
 
     @Transactional(readOnly = true)

@@ -38,7 +38,6 @@ public class MemberSaveRequest
         return Member.builder()
                 .role(Role.MEMBER)
                 .name(name)
-                .providerId("1234")
                 .password(password)
                 .provider(Provider.NONE)
                 .email(email)

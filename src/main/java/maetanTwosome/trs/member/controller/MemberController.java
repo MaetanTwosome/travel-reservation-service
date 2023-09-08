@@ -21,7 +21,8 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
 
-        MemberSaveResponse memberSaveResponse = memberService.saveMember(memberSaveRequest);
+        memberService.saveMember(memberSaveRequest);
+
         return ResponseEntity.ok("POST request successful");
     }
 

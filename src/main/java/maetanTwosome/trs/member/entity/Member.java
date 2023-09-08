@@ -46,7 +46,6 @@ public class Member {
     @Column(nullable = false)
     private Provider provider;
 
-    @Column(nullable = false)
     private String providerId;
 
     @Temporal(TemporalType.TIMESTAMP)

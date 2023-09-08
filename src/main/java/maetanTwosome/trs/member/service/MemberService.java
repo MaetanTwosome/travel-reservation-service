@@ -20,7 +20,7 @@ public class MemberService {
 
     @Transactional
     public MemberSaveResponse saveMember(MemberSaveRequest memberSaveRequest) {
-        validateDuplicateEmail(memberSaveRequest);
+        validateDuplicateEmail(memberSaveRequest.getEmail());
 
         String encodedPassword = passwordEncoder.encode(memberSaveRequest.getPassword());
         memberSaveRequest.setPassword(encodedPassword);
@@ -30,8 +30,9 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    private void validateDuplicateEmail(MemberSaveRequest memberSaveRequest) {
-        memberRepository.findByEmail(memberSaveRequest.getEmail())
-                .orElseThrow(() -> new IllegalStateException("이미 존재하는 이메일입니다."));
+    private void validateDuplicateEmail(final String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new IllegalStateException("이미 존재하는 이메일입니다.");
+        }
     }
 }

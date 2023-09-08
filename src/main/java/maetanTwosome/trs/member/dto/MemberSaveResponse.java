@@ -7,10 +7,13 @@ import maetanTwosome.trs.member.entity.Member;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class MemberSaveResponse
 {
     private Long id;
+
+    private MemberSaveResponse(final Long id) {
+        this.id = id;
+    }
 
     public static MemberSaveResponse from(Member member) {
         return new MemberSaveResponse(member.getId());

@@ -1,6 +1,5 @@
 package maetanTwosome.trs.member.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import maetanTwosome.trs.member.entity.Member;

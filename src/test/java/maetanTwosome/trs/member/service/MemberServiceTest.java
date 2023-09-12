@@ -36,23 +36,14 @@ class MemberServiceTest {
     void saveMember() {
 
         //given
-        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(MemberFixture.createMemberByEmail());
-        
-        Member member = Member.builder()
-                .id(1L)
-                .nickname(memberByEmailRequest.getNickname())
-                .name(memberByEmailRequest.getName())
-                .email(memberByEmailRequest.getEmail())
-                .phoneNumber(memberByEmailRequest.getPhoneNumber())
-                .password(memberByEmailRequest.getPassword())
-                .provider(Provider.NONE)
-                .build();
+        Member memberByEmail = MemberFixture.createMemberByEmail();
+        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(memberByEmail);
 
         given(memberRepository.save(any()))
-                .willReturn(member);
+                .willReturn(memberByEmail);
 
         given(memberRepository.findById(1L))
-                .willReturn(Optional.of(member));
+                .willReturn(Optional.of(memberByEmail));
 
         //when
         Long savedId = memberService.saveMember(memberByEmailRequest);

@@ -2,6 +2,8 @@ package maetanTwosome.trs.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import maetanTwosome.trs.member.dto.MemberRequest;
+import maetanTwosome.trs.member.entity.Member;
+import maetanTwosome.trs.member.fixture.MemberFixture;
 import maetanTwosome.trs.member.service.MemberService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.BDDMockito.given;
-import static maetanTwosome.trs.member.fixture.MemberFixture.createMemberRequestByEmail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -45,7 +45,7 @@ public class MemberControllerTest {
     @Test
     void join() throws Exception {
 
-        MemberRequest memberByEmailRequest = createMemberRequestByEmail();
+        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(MemberFixture.createMemberByEmail());
 
         given(memberService.saveMember(memberByEmailRequest))
                 .willReturn(1L);

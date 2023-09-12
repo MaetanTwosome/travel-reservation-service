@@ -3,14 +3,12 @@ package maetanTwosome.trs.member.repository;
 import maetanTwosome.trs.member.dto.MemberUpdateRequestDto;
 import maetanTwosome.trs.member.entity.Member;
 
-import maetanTwosome.trs.member.entity.Provider;
-import maetanTwosome.trs.member.entity.Role;
+import maetanTwosome.trs.member.fixture.MemberFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static maetanTwosome.trs.member.entity.Provider.*;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -24,13 +22,13 @@ public class MemberRepositoryTest {
     void create() {
 
         //given
-        Member member = createMemberByProvider(NONE);
+        Member member = MemberFixture.createMemberByEmail();
 
         //when
-        Member findMember = memberRepository.save(member);
+        Member foundMember = memberRepository.save(member);
 
         //then
-        assertThat(findMember.getName()).isEqualTo(member.getName());
+        assertThat(foundMember.getName()).isEqualTo(member.getName());
     }
 
     @DisplayName("계정 정보를 조회한다.")
@@ -38,16 +36,17 @@ public class MemberRepositoryTest {
     void read() {
 
         //given
-        Member member = createMemberByProvider(NONE);
+        Member member = MemberFixture.createMemberByEmail();
 
         //when
-        memberRepository.save(member);
-        Member findMember = memberRepository.findById(member.getId()).orElse(null);
-        assertThat(findMember).isNotNull();
+        Member savedMember = memberRepository.save(member);
+        
+        Member foundMember = memberRepository.findById(savedMember.getId()).orElse(null);
+        assertThat(foundMember).isNotNull();
 
         //then
-        assertThat(findMember.getName()).isEqualTo(member.getName());
-        assertThat(findMember.getEmail()).isEqualTo(member.getEmail());
+        assertThat(foundMember.getName()).isEqualTo(savedMember.getName());
+        assertThat(foundMember.getEmail()).isEqualTo(savedMember.getEmail());
     }
 
     @DisplayName("이메일 계정의 정보를 수정한다.")
@@ -55,21 +54,21 @@ public class MemberRepositoryTest {
     void updateEmailAccount() {
 
         //given
-        Member member = createMemberByProvider(NONE);
+        Member memberByEmail = MemberFixture.createMemberByEmail();
 
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto();
         dto.setNickname("길동이다이어트하자");
         dto.setPassword("1234abcd");
 
         //when
-        memberRepository.save(member);
-        Member findMember = memberRepository.findById(member.getId()).orElse(null);
-        assertThat(findMember).isNotNull();
+        Member savedMember = memberRepository.save(memberByEmail);
+        Member foundMember = memberRepository.findById(savedMember.getId()).orElse(null);
+        assertThat(foundMember).isNotNull();
 
-        findMember.update(dto);
+        foundMember.update(dto);
 
         //then
-        Member updateMember = memberRepository.findById(member.getId()).orElse(null);
+        Member updateMember = memberRepository.findById(foundMember.getId()).orElse(null);
         assertThat(updateMember).isNotNull();
         assertThat(updateMember.getNickname()).isEqualTo(dto.getNickname());
         assertThat(updateMember.getPassword()).isEqualTo(dto.getPassword());
@@ -80,21 +79,21 @@ public class MemberRepositoryTest {
     void updateOAuthAccount() {
 
         //given
-        Member member = createMemberByProvider(KAKAO);
+        Member memberBySNS = MemberFixture.createMemberBySNS();
 
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto();
         dto.setNickname("길동이다이어트하자");
         dto.setPassword("1234abcd");
 
         //when
-        memberRepository.save(member);
-        Member findMember = memberRepository.findById(member.getId()).orElse(null);
-        assertThat(findMember).isNotNull();
+        Member savedMember = memberRepository.save(memberBySNS);
+        Member foundMember = memberRepository.findById(savedMember.getId()).orElse(null);
+        assertThat(foundMember).isNotNull();
 
-        findMember.update(dto);
+        foundMember.update(dto);
 
         //then
-        Member updateMember = memberRepository.findById(member.getId()).orElse(null);
+        Member updateMember = memberRepository.findById(foundMember.getId()).orElse(null);
         assertThat(updateMember).isNotNull();
         assertThat(updateMember.getNickname()).isEqualTo(dto.getNickname());
         assertThat(updateMember.getPassword()).isNotEqualTo(dto.getPassword());
@@ -105,28 +104,15 @@ public class MemberRepositoryTest {
     void delete() {
 
         //given
-        Member member = createMemberByProvider(NONE);
+        Member memberByEmail = MemberFixture.createMemberByEmail();
 
         //when
-        memberRepository.save(member);
-        memberRepository.delete(member);
+        memberRepository.save(memberByEmail);
+        memberRepository.delete(memberByEmail);
 
         //then
-        Member deleteMember = memberRepository.findById(member.getId()).orElse(null);
+        Member deleteMember = memberRepository.findById(memberByEmail.getId()).orElse(null);
         assertThat(deleteMember).isNull();
     }
 
-    private static Member createMemberByProvider(Provider provider) {
-
-        return Member.builder()
-                .name("홍길동")
-                .nickname("길동이밥먹자")
-                .password("1234")
-                .email("trashyou@naver.com")
-                .phoneNumber("01012345678")
-                .role(Role.MEMBER)
-                .provider(provider)
-                .providerId("1234")
-                .build();
-    }
 }

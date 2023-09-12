@@ -3,6 +3,7 @@ package maetanTwosome.trs.member.service;
 import maetanTwosome.trs.member.dto.MemberRequest;
 import maetanTwosome.trs.member.entity.Member;
 import maetanTwosome.trs.member.entity.Provider;
+import maetanTwosome.trs.member.fixture.MemberFixture;
 import maetanTwosome.trs.member.repository.MemberRepository;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,11 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static maetanTwosome.trs.member.fixture.MemberFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
@@ -37,7 +36,7 @@ class MemberServiceTest {
     void saveMember() {
 
         //given
-        MemberRequest memberByEmailRequest = createMemberRequestByEmail();
+        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(MemberFixture.createMemberByEmail());
         
         Member member = Member.builder()
                 .id(1L)
@@ -62,7 +61,7 @@ class MemberServiceTest {
         Member foundMember = memberRepository.findById(savedId).orElse(null);
         assertThat(foundMember).isNotNull();
 
-        assertThat(foundMember.getEmail()).isEqualTo(memberByEmail.getEmail());
+        assertThat(foundMember.getEmail()).isEqualTo(memberByEmailRequest.getEmail());
     }
 
 }

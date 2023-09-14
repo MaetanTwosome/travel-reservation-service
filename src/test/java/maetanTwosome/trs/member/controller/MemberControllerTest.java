@@ -45,7 +45,16 @@ public class MemberControllerTest {
     @Test
     void join() throws Exception {
 
-        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(MemberFixture.createMemberByEmail());
+        //given
+        Member memberByEmail = MemberFixture.createMemberByEmail();
+
+        MemberRequest memberByEmailRequest = new MemberRequest(
+                memberByEmail.getNickname(),
+                memberByEmail.getName(),
+                memberByEmail.getEmail(),
+                memberByEmail.getPhoneNumber(),
+                memberByEmail.getPassword()
+        );
 
         given(memberService.saveMember(memberByEmailRequest))
                 .willReturn(1L);

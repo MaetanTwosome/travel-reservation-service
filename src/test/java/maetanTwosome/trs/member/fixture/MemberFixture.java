@@ -34,7 +34,4 @@ public class MemberFixture {
                     .build();
     }
 
-    public static MemberRequest createMemberRequest(Member member) {
-        return new MemberRequest(member.getNickname(), member.getName(), member.getEmail(), member.getPhoneNumber(), member.getPassword());
-    }
 }

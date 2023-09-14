@@ -37,7 +37,14 @@ class MemberServiceTest {
 
         //given
         Member memberByEmail = MemberFixture.createMemberByEmail();
-        MemberRequest memberByEmailRequest = MemberFixture.createMemberRequest(memberByEmail);
+
+        MemberRequest memberByEmailRequest = new MemberRequest(
+                memberByEmail.getNickname(),
+                memberByEmail.getName(),
+                memberByEmail.getEmail(),
+                memberByEmail.getPhoneNumber(),
+                memberByEmail.getPassword()
+        );
 
         given(memberRepository.save(any()))
                 .willReturn(memberByEmail);

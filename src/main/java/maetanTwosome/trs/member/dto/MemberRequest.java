@@ -14,7 +14,7 @@ import maetanTwosome.trs.member.entity.Role;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberSaveRequest
+public class MemberRequest
 {
     @NotBlank(message = "닉네임을 입력해주세요.")
     private String nickname;

@@ -2,9 +2,7 @@ package maetanTwosome.trs.member.service;
 
 import lombok.RequiredArgsConstructor;
 
-import maetanTwosome.trs.member.dto.MemberSaveRequest;
-import maetanTwosome.trs.member.dto.MemberSaveResponse;
-import maetanTwosome.trs.member.entity.Member;
+import maetanTwosome.trs.member.dto.MemberRequest;
 import maetanTwosome.trs.member.repository.MemberRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,13 +17,13 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Long saveMember(MemberSaveRequest memberSaveRequest) {
-        validateDuplicateEmail(memberSaveRequest.getEmail());
+    public Long saveMember(MemberRequest memberRequest) {
+        validateDuplicateEmail(memberRequest.getEmail());
 
-        String encodedPassword = passwordEncoder.encode(memberSaveRequest.getPassword());
-        memberSaveRequest.setPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(memberRequest.getPassword());
+        memberRequest.setPassword(encodedPassword);
 
-        return memberRepository.save(memberSaveRequest.toEntity()).getId();
+        return memberRepository.save(memberRequest.toEntity()).getId();
     }
 
     @Transactional(readOnly = true)

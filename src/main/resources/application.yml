@@ -19,4 +19,7 @@ spring:
         format_sql: true # SQL 쿼리 포맷팅 여부 설정
         use_sql_comments: true # SQL 쿼리 주석 사용 여부 설정
 
+  output:
+    ansi:
+      enabled: always
 

@@ -7,8 +7,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import maetanTwosome.trs.member.dto.MemberUpdateRequestDto;
+import maetanTwosome.trs.reservation.entity.Reservation;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static maetanTwosome.trs.member.entity.Provider.*;
 
@@ -53,6 +56,10 @@ public class Member {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date joinDate;
+
+    @OneToMany
+    @JoinColumn(name = "reservation_id")
+    private final List<Reservation> reservations = new ArrayList<>();
 
     @Builder
     public Member(Long id, String email, String password, String phoneNumber, String nickname, String name, Role role, Provider provider, String providerId, Date lastLoginDate, Date joinDate) {

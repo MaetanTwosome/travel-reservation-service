@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ReservationRequest {
 
+    private Date reservationDate;
     private Date startDate;
     private Date endDate;
     private String direction;
@@ -22,6 +23,7 @@ public class ReservationRequest {
 
     public Reservation toEntity() {
         return Reservation.builder()
+                .reservationDate(reservationDate)
                 .startDate(startDate)
                 .endDate(endDate)
                 .guestNumber(guestNumber)

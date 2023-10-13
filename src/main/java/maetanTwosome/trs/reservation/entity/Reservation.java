@@ -45,11 +45,15 @@ public class Reservation {
     @Column(nullable = false)
     private Date endDate;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
+
     @OneToOne(mappedBy = "reservation")
     private Room room;
 
     @Builder
-    public Reservation(Long id, Date reservationDate, int guestNumber, String status, String request, Date modificationDate, String direction, Date startDate, Date endDate, Room room) {
+    public Reservation(Long id, Date reservationDate, int guestNumber, String status, String request, Date modificationDate, String direction, Date startDate, Date endDate, Member member, Room room) {
         this.id = id;
         this.reservationDate = reservationDate;
         this.guestNumber = guestNumber;
@@ -59,6 +63,7 @@ public class Reservation {
         this.direction = direction;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.member = member;
         this.room = room;
     }
 }

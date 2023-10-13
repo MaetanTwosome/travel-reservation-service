@@ -8,11 +8,14 @@ import maetanTwosome.trs.reservation.entity.Reservation;
 import maetanTwosome.trs.room.entity.Room;
 import maetanTwosome.trs.room.fixture.RoomFixture;
 
+import java.util.Date;
+
 public class ReservationFixture {
 
     public static Reservation createReservation() {
         return Reservation.builder()
                 .id(1L)
+                .reservationDate()
                 .guestNumber(2)
                 .status("1")
                 .request("금연실 부탁드립니다.")

@@ -57,8 +57,7 @@ public class Member {
     @Temporal(TemporalType.TIMESTAMP)
     private Date joinDate;
 
-    @OneToMany
-    @JoinColumn(name = "reservation_id")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private final List<Reservation> reservations = new ArrayList<>();
 
     @Builder

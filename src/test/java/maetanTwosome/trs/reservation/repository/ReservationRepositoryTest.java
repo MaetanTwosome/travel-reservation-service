@@ -18,7 +18,7 @@ class ReservationRepositoryTest {
 
     @DisplayName("예약을 한다.")
     @Test
-    void create() {
+    void save() {
         Reservation reservation = ReservationFixture.createReservation();
 
         Reservation bookedReservation = reservationRepository.save(reservation);
